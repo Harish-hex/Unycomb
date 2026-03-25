@@ -15,12 +15,12 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ number, title, features }: ServiceCardProps) {
-  const [activeFeature, setActiveFeature] = useState<FeatureItem | null>(null)
+  const [activeFeature, setActiveFeature] = useState<FeatureItem>(features[0])
 
   return (
     <div
       className="group border-t border-white/20 py-12 hover:bg-white/5 transition-colors duration-500 cursor-pointer"
-      onMouseLeave={() => setActiveFeature(null)}
+      onMouseLeave={() => setActiveFeature(features[0])}
     >
       <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-start justify-between gap-8">
         <div className="font-mono text-[#FFA500] text-xl">({number})</div>
@@ -30,24 +30,21 @@ export function ServiceCard({ number, title, features }: ServiceCardProps) {
           </h3>
           <div className="flex gap-4 flex-wrap">
             {features.map((feature) => (
-              <span
+              <button
                 key={feature.label}
-                className="px-3 py-1 border border-white/30 rounded-full text-white/60 font-mono text-sm uppercase transition-colors duration-200 hover:text-white hover:border-white/70"
+                type="button"
+                className="px-3 py-1 border border-white/30 rounded-full text-white/60 font-mono text-sm uppercase transition-colors duration-200 hover:text-white hover:border-white/70 focus-visible:text-white focus-visible:border-white/70"
                 onMouseEnter={() => setActiveFeature(feature)}
                 onFocus={() => setActiveFeature(feature)}
-                tabIndex={0}
+                title={feature.description}
               >
                 {feature.label}
-              </span>
+              </button>
             ))}
           </div>
           <div className="mt-4 min-h-14">
-            <p
-              className={`max-w-2xl text-sm md:text-base text-white/75 font-mono leading-relaxed transition-opacity duration-200 ${
-                activeFeature ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              {activeFeature?.description ?? ""}
+            <p className="max-w-2xl text-sm md:text-base text-white/85 font-mono leading-relaxed transition-opacity duration-200 opacity-100">
+              {activeFeature.description}
             </p>
           </div>
         </div>
