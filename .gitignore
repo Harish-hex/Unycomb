@@ -31,3 +31,4 @@ public/spinup-image.jpeg
 public/unycomb-logo-crop.jpg
 public/unycomb-logo-crop.png
 public/unycomb-logo.svg
+.env*.local

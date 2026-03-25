@@ -42,7 +42,7 @@ export function Hero() {
 
           <div className="font-mono text-lg md:text-xl font-bold uppercase text-right">
             Builder Ecosystem <br />
-            Since 2024
+            Since 2026
           </div>
         </div>
       </div>
