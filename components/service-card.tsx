@@ -1,16 +1,27 @@
 "use client"
 
+import { useState } from "react"
 import { ArrowUpRight } from "lucide-react"
+
+interface FeatureItem {
+  label: string
+  description: string
+}
 
 interface ServiceCardProps {
   number: string
   title: string
-  tags: string[]
+  features: FeatureItem[]
 }
 
-export function ServiceCard({ number, title, tags }: ServiceCardProps) {
+export function ServiceCard({ number, title, features }: ServiceCardProps) {
+  const [activeFeature, setActiveFeature] = useState<FeatureItem | null>(null)
+
   return (
-    <div className="group border-t border-white/20 py-12 hover:bg-white/5 transition-colors duration-500 cursor-pointer">
+    <div
+      className="group border-t border-white/20 py-12 hover:bg-white/5 transition-colors duration-500 cursor-pointer"
+      onMouseLeave={() => setActiveFeature(null)}
+    >
       <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-start justify-between gap-8">
         <div className="font-mono text-[#FFA500] text-xl">({number})</div>
         <div className="flex-1">
@@ -18,14 +29,26 @@ export function ServiceCard({ number, title, tags }: ServiceCardProps) {
             {title}
           </h3>
           <div className="flex gap-4 flex-wrap">
-            {tags.map((tag) => (
+            {features.map((feature) => (
               <span
-                key={tag}
-                className="px-3 py-1 border border-white/30 rounded-full text-white/60 font-mono text-sm uppercase"
+                key={feature.label}
+                className="px-3 py-1 border border-white/30 rounded-full text-white/60 font-mono text-sm uppercase transition-colors duration-200 hover:text-white hover:border-white/70"
+                onMouseEnter={() => setActiveFeature(feature)}
+                onFocus={() => setActiveFeature(feature)}
+                tabIndex={0}
               >
-                {tag}
+                {feature.label}
               </span>
             ))}
+          </div>
+          <div className="mt-4 min-h-14">
+            <p
+              className={`max-w-2xl text-sm md:text-base text-white/75 font-mono leading-relaxed transition-opacity duration-200 ${
+                activeFeature ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {activeFeature?.description ?? ""}
+            </p>
           </div>
         </div>
         <div className="md:self-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:rotate-45">
